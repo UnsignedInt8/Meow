@@ -8,6 +8,40 @@ import './styles/mentions.css';
 
 import mentions from './mentions';
 
+const Entry = (props) => {
+    const {
+      mention,
+      searchValue, // eslint-disable-line no-unused-vars
+      isFocused, // eslint-disable-line no-unused-vars
+      ...parentProps
+    } = props;
+  
+    return (
+      <div {...parentProps}>
+        <div className='mentionSuggestionsEntryContainer'>
+          <div className='mentionSuggestionsEntryContainerLeft'>
+            <img
+              src={mention.get('avatar')}
+              className='mentionSuggestionsEntryAvatar'
+              role="presentation"
+            />
+          </div>
+  
+          <div className='mentionSuggestionsEntryContainerRight'>
+            <div className='mentionSuggestionsEntryText'>
+              {mention.get('name')}
+            </div>
+  
+            <div className='mentionSuggestionsEntryTitle'>
+              {mention.get('title')}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+  
+
 export default class MentionEditor extends Component {
 
     mentionPlugin: any;
@@ -67,6 +101,7 @@ export default class MentionEditor extends Component {
                     onSearchChange={this.onSearchChange}
                     suggestions={this.state.suggestions}
                     onAddMention={this.onAddMention}
+                    entryComponent={Entry}
                 />
             </div>
         );

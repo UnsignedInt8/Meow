@@ -20,7 +20,7 @@
 
 .mentionSuggestionsEntryContainer {
   display: table;
-  width: 100%;
+  /* width: 100%; */
 }
 
 .mentionSuggestionsEntryContainerLeft,
@@ -30,7 +30,7 @@
 }
 
 .mentionSuggestionsEntryContainerRight {
-  width: 100%;
+  /* width: 100%; */
   padding-left: 8px;
 }
 
@@ -56,17 +56,20 @@
 }
 
 .mentionSuggestionsEntryText {
+  font-weight: 800;
 }
 
 .mentionSuggestionsEntryTitle {
   font-size: 80%;
   color: #a7a7a7;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .mentionSuggestionsEntryAvatar {
   display: block;
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
 }
 
