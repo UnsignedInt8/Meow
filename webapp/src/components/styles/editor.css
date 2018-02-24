@@ -1,0 +1,19 @@
+.editor {
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  cursor: text;
+  padding: 8px;
+  border-radius: 5px;
+  margin-bottom: 2em;
+  background: #fefefe;
+  transition: border-color 0.5s;  
+}
+
+.editor :global(.public-DraftEditor-content) {
+  min-height: 17px;
+}
+
+.editor_focused {
+  border-color: deepskyblue;
+  transition: border-color 0.5s;
+}
