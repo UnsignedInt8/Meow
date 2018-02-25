@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { EditorState } from 'draft-js';
+import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import Editor from 'draft-js-plugins-editor';
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
 import createEmojiPlugin from 'draft-js-emoji-plugin';
@@ -9,9 +9,12 @@ import './styles/editor.css';
 import './styles/mentions.css';
 import './styles/emoji.css';
 
+import { compose } from 'draft-extend';
+import { convertToHTML, convertFromHTML, parseHTML } from 'draft-convert';
+
 import mentions from './mentions';
 
-const Entry = (props) => {
+const MentionEntry = (props) => {
     const {
         mention,
         searchValue, // eslint-disable-line no-unused-vars
@@ -44,21 +47,22 @@ const Entry = (props) => {
     );
 };
 
-
 export default class MentionEditor extends Component {
 
     mentionPlugin: any;
     emojiPlugin: any;
     editor: Editor;
     plugins: any[] = [];
+    html?: string;
 
     constructor(props) {
         super(props);
 
         this.emojiPlugin = createEmojiPlugin({
             selectButtonContent: '☻',
-            useNativeArt: false,
+            useNativeArt: true,
         });
+        
         this.mentionPlugin = createMentionPlugin({
             entityMutability: 'IMMUTABLE',
             mentionPrefix: '@',
@@ -73,12 +77,22 @@ export default class MentionEditor extends Component {
         isFocused: false,
     };
 
-    onChange = (editorState) => {
+    onChange = (editorState: EditorState) => {
         this.setState({
             editorState,
         });
-        let blocks = editorState.getCurrentContent().getBlocksAsArray();
-        blocks.forEach(b => console.log(b.toString()));
+
+        this.html = convertToHTML({            
+            entityToHTML: (entity, originalText) => {
+                if (entity.type === 'mention') {
+                    return <a href={entity.data.mention.get('avatar')}>{originalText}</a>;
+                }
+                console.log('entity', entity, originalText);
+                return originalText;
+            }
+        })(editorState.getCurrentContent());
+
+        console.log(this.html);
     };
 
     onSearchChange = ({ value }) => {
@@ -96,18 +110,22 @@ export default class MentionEditor extends Component {
         this.setState({ isFocused: true });
     };
 
-    blur = () => { this.setState({ isFocused: false }) };
+    blur = () => {
+        let isFocused = this.html && this.html.replace(`<p></p>`, '').length > 0 ? true : false
+        this.setState({ isFocused });
+    };
 
     render() {
         const { MentionSuggestions } = this.mentionPlugin;
         const { EmojiSuggestions, EmojiSelect } = this.emojiPlugin;
 
         return (
-            <div>
-                <div className={`editor ${this.state.isFocused ? 'editor_focused' : ''}`} onBlur={this.blur} onClick={this.focus}>
+            <div onClick={this.focus} >
+                <div className={`editor ${this.state.isFocused ? 'editor_focused' : ''}`} >
                     <Editor
                         editorState={this.state.editorState}
                         onChange={this.onChange}
+                        onBlur={this.blur}
                         plugins={this.plugins}
                         ref={(element) => { this.editor = element; }}
                     />
@@ -115,7 +133,7 @@ export default class MentionEditor extends Component {
                         onSearchChange={this.onSearchChange}
                         suggestions={this.state.suggestions}
                         onAddMention={this.onAddMention}
-                        entryComponent={Entry}
+                        entryComponent={MentionEntry}
                     />
                     <EmojiSuggestions />
                 </div>

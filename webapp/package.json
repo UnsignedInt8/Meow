@@ -5,6 +5,8 @@
   "description": "A Decentralized ฅ•ω•ฅ",
   "dependencies": {
     "antd": "^3.2.1",
+    "draft-convert": "^2.0.1",
+    "draft-extend": "^1.5.4",
     "draft-js": "^0.10.5",
     "draft-js-emoji-plugin": "^2.0.1",
     "draft-js-mention-plugin": "^2.0.1",
@@ -25,6 +27,7 @@
     "@types/node": "^9.4.6",
     "@types/react": "^16.0.38",
     "@types/react-dom": "^16.0.4",
+    "@types/draft-js": "^0.10.20",
     "css-loader": "^0.28.10",
     "style-loader": "^0.20.2",
     "typescript": "^2.7.2"

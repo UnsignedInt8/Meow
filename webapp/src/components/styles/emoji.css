@@ -4,6 +4,10 @@ img[class^='draftJsEmojiPlugin__emojiSelectPopoverEntryIcon'] {
     vertical-align: middle;
 }
 
+button[class^='draftJsEmojiPlugin__emojiSelectPopoverEntry'] {
+    font-size: 20px;
+}
+
 button[class^='draftJsEmojiPlugin__emojiSelectButton'] {
     border: none;
     border-radius: 50%;
