@@ -1,0 +1,22 @@
+img[class^='draftJsEmojiPlugin__emojiSelectPopoverEntryIcon'] {
+    width: 22px;
+    height: 22px;
+    vertical-align: middle;
+}
+
+button[class^='draftJsEmojiPlugin__emojiSelectButton'] {
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+button[class^='draftJsEmojiPlugin__emojiSelectButton']:hover {
+    color: deepskyblue;
+    background: none;
+}
+
+button[class^='draftJsEmojiPlugin__emojiSelectButtonPressed'] {
+    background: none;
+    color: deepskyblue;
+}
